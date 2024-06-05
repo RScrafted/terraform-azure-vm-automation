@@ -1,0 +1,28 @@
+# local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# to skip locl.hcl for now
+*.terraform.*
+
+# to skip MacOS file found after creating .bicep
+.DS_Store
+
+# plan files (optional). To save plan before destroy
+planout
+
+# save the terraform plan as tfplan.out
+tfplan.out
+
+# ignore personal notes or learning
+*.docx
+*.txt
+
+# ignore graph file
+*.dot
+
+# ignore flowcharts
+*.drawio
