@@ -1,6 +1,12 @@
+# Automated Azure Virtual Machine Deployment using Terraform
+
+---
+
 ## Project Overview
 
 The **Terraform Azure VM Automation** project demonstrates how to automate the deployment of a virtual machine (VM) in Azure using Terraform. This project aims to showcase Infrastructure as Code (IaC) principles and how to manage cloud resources efficiently. The project includes automated deployment scripts, Terraform configuration files, and examples of outputs for easy management and scalability of Azure resources.
+
+---
 
 ## Prerequisites
 
@@ -10,6 +16,8 @@ Before you begin, ensure you have the following installed:
 2. **Azure CLI**: [Install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 3. **Git**: [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 4. **PowerShell**: Available by default on Windows; for other operating systems, download from [Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell).
+
+---
 
 ## Project Structure
 
@@ -26,6 +34,8 @@ terraform-azure-vm-automation/
 ├── .gitignore
 └── README.md
 ```
+
+---
 
 ## Terraform Configuration
 
@@ -191,6 +201,8 @@ output "virtual_machine_name" {
 }
 ```
 
+---
+
 ## PowerShell Scripts
 
 ### git-init-push.ps1
@@ -254,6 +266,14 @@ terraform plan -destroy -out="planout"
 terraform apply "planout"
 ```
 
+---
+
+## Graph Output
+
+![Graph Output](https://github.com/RScrafted/terraform-azure-vm-automation/blob/5a09e044922d0ce438c065bf7a8364c577f3cc5f/graph.png)
+
+---
+
 ## Key Learnings
 
 - **network_interface_name**: I encountered issues when trying to reference a map {} directly. I resolved this by creating a separate variable.
@@ -261,16 +281,24 @@ terraform apply "planout"
 - **azurerm_virtual_network**: The virtual network resource was being prioritized before the resource group creation, causing failures. I fixed this by adding a `depends_on` clause to ensure it waits for the resource group.
 - **NetworkWatcherRG**: Upon successful deployment, a new resource group named NetworkWatcherRG is automatically created as part of Azure's network monitoring service, which is currently free. This occurs because the configuration includes networking components such as VNET, SUBNET, and NI. This new resource group can be manually deleted or disabled for the deployed resource's region. [Reference](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-create?tabs=portal).
 
+---
+
 ## Potential Enhancements
 
 1. **Disable Password Authentication**: Update the `os_profile_linux_config` to `disable_password_authentication = true` for better security and configure SSH keys for VM access.
 2. **Secret Management**: Move sensitive information such as admin passwords to a secure secret management system like Azure Key Vault.
 3. **Scalability**: Enhance the configuration to support deployment of multiple VMs and additional Azure resources such as databases and load balancers.
 
+---
+
 ## Contributing
 
 Feel free to fork this repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change. I have started a discussion, and everyone can bring ideas there.
 
+---
+
 ## Acknowledgments
 
 Thanks to the Terraform and Azure documentation teams for their extensive resources and examples. This project was inspired by the need to automate and efficiently manage cloud infrastructure.
+
+---
