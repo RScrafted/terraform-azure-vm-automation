@@ -82,7 +82,10 @@ This script destroys the Terraform-managed infrastructure. Except NetworkWatcher
 ---
 
 ## Key Learnings
+
 Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automation/wiki) page.
+
+
 ---
 
 ## Potential Enhancements
