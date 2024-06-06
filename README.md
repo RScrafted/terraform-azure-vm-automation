@@ -17,6 +17,8 @@ Before you begin, ensure you have the following installed:
 3. **Git**: [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 4. **PowerShell**: Available by default on Windows; for other operating systems, download from [Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell).
 
+### If you're new to Git, check out my [Git guide](https://github.com/RScrafted/guide-how-to-git/tree/main). Visual Studio Code makes it easy to get started.
+
 ---
 
 ## Project Structure
