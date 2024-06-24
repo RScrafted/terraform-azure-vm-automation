@@ -26,3 +26,6 @@ tfplan.out
 
 # ignore flowcharts
 *.drawio
+
+# ignore Visual Studio Code customization
+.vscode
