@@ -84,7 +84,7 @@ resource "azurerm_virtual_machine" "autoazvm-test-rg-vm" {
   }
 
   os_profile_linux_config {
-    disable_password_authentication = false # being a test and short-lived environment, this is set to fale. 
+    disable_password_authentication = false # being a test and short-lived environment with password verified, this is set to false.
   }
 
   tags = {

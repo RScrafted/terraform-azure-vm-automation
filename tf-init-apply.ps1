@@ -23,3 +23,6 @@ terraform show # includes output
 # To visually see, use below and paste output to http://www.webgraphviz.com/?tab=map
 # terraform graph
 terraform graph > graph.dot # saves in the current repository for later view.
+
+# (Optional) Clean up the Terraform plan file
+rm -rf tfplan
