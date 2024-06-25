@@ -1,25 +1,52 @@
 variable "resource_group_name" {
   description = "The name of the resource group"
-  type        = string
-  default     = "autoazvm-test-rg" # Skip this to received a prompt. Since I am automating, we keep!
 }
 
 # Location variable is referenced in multiple resources. ADD New if I want resources to be provisioned in different regions.
 # az account list-locations -o table to Get Azure Regions
 variable "location" {
   description = "The Azure region in which resources will be provisioned"
-  type        = string
-  default     = "eastus" # Avoid skiping defaults for Resource Group, manually entering incorrect destroys the existing RG and related resources if any.
+}
+
+variable "azurerm_virtual_network" {
+  description = "The name of the Virtual Network"
+}
+
+variable "azurerm_subnet" {
+  description = "The name of the Subnet"
 }
 
 variable "network_interface_name" {
   description = "The name of the network interface"
-  type        = string
-  default     = "autoazvm-test-rg-ni" # This is must since i cannot reference the resource's own name in its definition. Instead, I defined as a variable to specify the name. I could use static name alternatively in the main.tf
+}
+
+variable "ip_configuration" {
+  description = "The name of the IP Configuration resource"
+}
+
+variable "azurerm_virtual_machine" {
+  description = "The name of the Virtual Machine"
 }
 
 variable "vm_size" {
   description = "The size of the Virtual Machine"
-  type        = string
-  default     = "standard_ds1_v2"
+}
+
+variable "storage_os_disk" {
+  description = "The name of the Storage OS disk"
+}
+
+variable "computer_name" {
+  description = "The HOSTNAME"
+}
+
+variable "admin_username" {
+  description = "The admin username"
+}
+
+variable "admin_password" {
+  description = "The admin password"
+}
+variable "tags" {
+  type = map(string)
 }
