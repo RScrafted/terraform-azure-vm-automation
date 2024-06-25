@@ -14,56 +14,52 @@ provider "azurerm" {
     }
   }
 }
-resource "azurerm_resource_group" "autoazvm-test-rg" {
+resource "azurerm_resource_group" "autoazvm-dev-rg" {
   name     = var.resource_group_name
   location = var.location
-  tags = {
-    Project     = "Automated Azure VM Deployment"
-    Environment = "Test"
-    Owner       = "Rachit"
-  }
+  tags     = var.tags
 }
 
 # Below starts critical resources for this Project
 
-resource "azurerm_virtual_network" "autoazvm-test-rg-vnet" {
-  name                = "${var.resource_group_name}-vnet"
+resource "azurerm_virtual_network" "autoazvm-dev-vnet" {
+  name                = var.azurerm_virtual_network
   resource_group_name = var.resource_group_name # azure_resource_group.autoazvm-test-rg.name is an alternate. Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine
   location            = var.location            # azurerm_resource_group.autoazvm-test-rg.location is an alternate. Ref: ""
   address_space       = ["10.0.0.0/16"]
 
-  depends_on = [azurerm_resource_group.autoazvm-test-rg]
+  depends_on = [azurerm_resource_group.autoazvm-dev-rg]
 }
 
 # Location selection via portal is mandatory, not in here!
-resource "azurerm_subnet" "autoazvm-test-rg-subnet" {
-  name                 = "${var.resource_group_name}-subnet"
+resource "azurerm_subnet" "autoazvm-dev-subnet" {
+  name                 = var.azurerm_subnet
   resource_group_name  = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.autoazvm-test-rg-vnet.name
+  virtual_network_name = var.azurerm_virtual_network
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource "azurerm_network_interface" "autoazvm-test-rg-ni" {
+resource "azurerm_network_interface" "autoazvm-dev-ni" {
   name                = var.network_interface_name
   resource_group_name = var.resource_group_name
-  location            = azurerm_resource_group.autoazvm-test-rg.location
+  location            = var.location
 
-  ip_configuration {                                                         # Mandatory
-    name                          = "${var.network_interface_name}-internal" # verify name after deployment
-    subnet_id                     = azurerm_subnet.autoazvm-test-rg-subnet.id
+  ip_configuration {                                     # Mandatory
+    name                          = var.ip_configuration # verify name after deployment
+    subnet_id                     = azurerm_subnet.autoazvm-dev-subnet.id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
-resource "azurerm_virtual_machine" "autoazvm-test-rg-vm" {
-  name                  = "${var.resource_group_name}-vm"
+resource "azurerm_virtual_machine" "autoazvm-dev-vm" {
+  name                  = var.azurerm_virtual_machine
   location              = var.location
   resource_group_name   = var.resource_group_name
-  network_interface_ids = [azurerm_network_interface.autoazvm-test-rg-ni.id] # If I plan to add multiple NIC, I can use azurevm_network_interface.autoazvm-test-rg-ni.*.id
+  network_interface_ids = [azurerm_network_interface.autoazvm-dev-ni.id] # alternate to add all the NIC --> azurevm_network_interface.autoazvm-dev-ni.*.id
   vm_size               = var.vm_size
 
   storage_os_disk {
-    name              = "${var.resource_group_name}-osdisk"
+    name              = var.storage_os_disk
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
@@ -78,18 +74,14 @@ resource "azurerm_virtual_machine" "autoazvm-test-rg-vm" {
     version   = "latest"
   }
   os_profile {
-    computer_name  = "myUbuntu" # hostname
-    admin_username = "avengers"
-    admin_password = "Assemble@2024" # Just a Marvel fan.. :) I never use these as credentials otherwise!
+    computer_name  = var.computer_name
+    admin_username = var.admin_username
+    admin_password = var.admin_password
   }
 
   os_profile_linux_config {
     disable_password_authentication = false # being a test and short-lived environment with password verified, this is set to false.
   }
 
-  tags = {
-    Project     = "Automated Azure VM Deployment"
-    Environment = "Test"
-    Owner       = "Rachit"
-  }
+  tags = var.tags
 }

@@ -11,7 +11,7 @@ terraform validate
 # terraform apply -auto-approve
 
 # terraform plan
-terraform plan -out='tfplan.out'
+terraform plan -var-file="terraform.tfvars" -out='tfplan.out'
 terraform apply -auto-approve tfplan.out
 
 # Show resources from state file
@@ -25,4 +25,4 @@ terraform show # includes output
 terraform graph > graph.dot # saves in the current repository for later view.
 
 # (Optional) Clean up the Terraform plan file
-rm -rf tfplan
+Remove-Item -Path "./tfplan.out" -Force
