@@ -4,13 +4,13 @@
 
 ## Project Overview
 
-The **Terraform Azure VM Automation** project demonstrates how to automate the deployment of a virtual machine (VM) in Azure using Terraform. This project aims to showcase Infrastructure as Code (IaC) principles and how to manage cloud resources efficiently. The project includes automated deployment scripts, Terraform configuration files, and examples of outputs for easy management and scalability of Azure resources.
+The **Terraform Azure VM Automation** project demonstrates how to automate the deployment of a virtual machine (VM) in Azure using Terraform. I aim to showcase Infrastructure as Code (IaC) principles and how to manage cloud resources efficiently. This configuration includes automated deployment scripts for now, Terraform configuration files, and examples of outputs for easy management and scalability of Azure resources.
 
 ---
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before using the Terraform configuration, ensure the following is installed:
 
 1. **Terraform**: [Install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 2. **Azure CLI**: [Install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
@@ -21,7 +21,7 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## Project Structure
+## Structure
 
 ```
 terraform-azure-vm-automation/
@@ -29,11 +29,16 @@ terraform-azure-vm-automation/
 ├── main.tf
 ├── variables.tf
 ├── outputs.tf
+├── terraform.tfvars
 ├── git-init-push.ps1
 ├── tf-init-apply.ps1
 ├── tf-destroy.ps1
 ├── LICENSE
 ├── .gitignore
+├── photos
+│   ├── social_preview.jpg
+│   ├── graph.png
+│   ├── NetworkWatcherRG.png
 └── README.md
 ```
 
@@ -48,7 +53,7 @@ This file contains the core configuration for provisioning resources in Azure. I
 
 ### variables.tf
 
-This file defines the variables used in the Terraform configuration, making it easy to customize the deployment by changing variable values.
+This file defines the variables used in the Terraform configuration and uses `terraform.tfvars` to specify values, making it easy to customize the deployment environment by changing variable values.
 
 
 ### outputs.tf
@@ -63,6 +68,8 @@ This file defines the outputs of the Terraform configuration, providing useful i
 ### git-init-push.ps1
 
 This script initializes a Git repository, adds a remote origin, commits changes, and pushes to the remote repository. The script works uninterrupted if the GitHub repository is already created and the script is updated accordingly.
+
+Please refer my custom crafted [how to git guide](https://github.com/RScrafted/guide-how-to-git) if you are a beginner.
 
 
 ### tf-init-apply.ps1
@@ -90,11 +97,12 @@ Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automati
 
 ---
 
-## Potential Enhancements
+## Potential Enhancements (in progress)
 
 1. **Disable Password Authentication**: Update the `os_profile_linux_config` to `disable_password_authentication = true` for better security and configure SSH keys for VM access.
 2. **Secret Management**: Move sensitive information such as admin passwords to a secure secret management system like Azure Key Vault.
 3. **Scalability**: Enhance the configuration to support deployment of multiple VMs and additional Azure resources such as databases and load balancers.
+4. **Load Balancer** and **CI/CD Integration**
 
 
 ---
