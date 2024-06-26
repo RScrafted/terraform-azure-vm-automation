@@ -86,7 +86,7 @@ This script destroys the Terraform-managed infrastructure. Except NetworkWatcher
 
 ## Graph Output
 
-![Graph Output](https://github.com/RScrafted/terraform-azure-vm-automation/blob/5a09e044922d0ce438c065bf7a8364c577f3cc5f/graph.png)
+![Graph Output](https://github.com/RScrafted/terraform-azure-vm-automation/blob/549f1271d5ecfc20c706c64c163d9655cd8d48ef/photos/graph.png)
 
 ---
 
