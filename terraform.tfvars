@@ -4,15 +4,15 @@ resource_group_name = "autoazvm-dev-rg"
 # Avoid skiping defaults for Resource Group, incorrect manual entry destroys the existing RG and related resources if any.
 location = "eastus"
 
-azurerm_virtual_network = "autoazvm-dev-vnet"
+virtual_network_name = "autoazvm-dev-vnet"
 
-azurerm_subnet = "autoazvm-dev-subnet"
+subnet_name = "autoazvm-dev-subnet"
 
 network_interface_name = "autoazvm-dev-ni"
 
-ip_configuration = "autoazvm-dev-ipconfig"
+ip_configuration_name = "autoazvm-dev-ipconfig"
 
-azurerm_virtual_machine = "autoazvm-dev-vm"
+virtual_machine_name = "autoazvm-dev-vm"
 
 vm_size = "standard_ds1_v2"
 
@@ -25,7 +25,7 @@ admin_username = "tonystark"
 admin_password = "IAmIr0nMan@4ev3r"
 
 tags = {
-  "Project" = "Automated"
+  "Project"     = "Automated"
   "Environment" = "Development"
-  "Owner" = "Rachit"
+  "Owner"       = "Rachit"
 }

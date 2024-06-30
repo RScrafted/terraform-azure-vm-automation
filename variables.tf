@@ -8,11 +8,11 @@ variable "location" {
   description = "The Azure region in which resources will be provisioned"
 }
 
-variable "azurerm_virtual_network" {
+variable "virtual_network_name" {
   description = "The name of the Virtual Network"
 }
 
-variable "azurerm_subnet" {
+variable "subnet_name" {
   description = "The name of the Subnet"
 }
 
@@ -20,11 +20,11 @@ variable "network_interface_name" {
   description = "The name of the network interface"
 }
 
-variable "ip_configuration" {
+variable "ip_configuration_name" {
   description = "The name of the IP Configuration resource"
 }
 
-variable "azurerm_virtual_machine" {
+variable "virtual_machine_name" {
   description = "The name of the Virtual Machine"
 }
 
