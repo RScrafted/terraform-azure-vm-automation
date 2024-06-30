@@ -23,9 +23,9 @@ resource "azurerm_resource_group" "autoazvm-dev-rg" {
 # Below starts critical resources for this Project
 
 resource "azurerm_virtual_network" "autoazvm-dev-vnet" {
-  name                = var.azurerm_virtual_network
-  resource_group_name = var.resource_group_name # azure_resource_group.autoazvm-test-rg.name is an alternate. Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine
-  location            = var.location            # azurerm_resource_group.autoazvm-test-rg.location is an alternate. Ref: ""
+  name                = var.virtual_network_name
+  resource_group_name = azurerm_resource_group.autoazvm-dev-rg.name # explicit referenced resource to ensure proper dependency handeling
+  location            = azurerm_resource_group.autoazvm-dev-rg.location # explicit referenced resource to ensure proper dependency handeling
   address_space       = ["10.0.0.0/16"]
 
   depends_on = [azurerm_resource_group.autoazvm-dev-rg]
@@ -33,28 +33,30 @@ resource "azurerm_virtual_network" "autoazvm-dev-vnet" {
 
 # Location selection via portal is mandatory, not in here!
 resource "azurerm_subnet" "autoazvm-dev-subnet" {
-  name                 = var.azurerm_subnet
-  resource_group_name  = var.resource_group_name
-  virtual_network_name = var.azurerm_virtual_network
+  name                 = var.subnet_name
+  resource_group_name  = azurerm_resource_group.autoazvm-dev-rg.name
+  virtual_network_name = azurerm_virtual_network.autoazvm-dev-vnet.name
   address_prefixes     = ["10.0.1.0/24"]
+
+  depends_on = [azurerm_resource_group.autoazvm-dev-rg, azurerm_virtual_network.autoazvm-dev-vnet]
 }
 
 resource "azurerm_network_interface" "autoazvm-dev-ni" {
   name                = var.network_interface_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_resource_group.autoazvm-dev-rg.name
+  location            = azurerm_resource_group.autoazvm-dev-rg.location
 
-  ip_configuration {                                     # Mandatory
-    name                          = var.ip_configuration # verify name after deployment
+  ip_configuration {                                          # Mandatory
+    name                          = var.ip_configuration_name # verify name after deployment
     subnet_id                     = azurerm_subnet.autoazvm-dev-subnet.id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 resource "azurerm_virtual_machine" "autoazvm-dev-vm" {
-  name                  = var.azurerm_virtual_machine
-  location              = var.location
-  resource_group_name   = var.resource_group_name
+  name                  = var.virtual_machine_name
+  location              = azurerm_resource_group.autoazvm-dev-rg.location
+  resource_group_name   = azurerm_resource_group.autoazvm-dev-rg.name
   network_interface_ids = [azurerm_network_interface.autoazvm-dev-ni.id] # alternate to add all the NIC --> azurevm_network_interface.autoazvm-dev-ni.*.id
   vm_size               = var.vm_size
 
