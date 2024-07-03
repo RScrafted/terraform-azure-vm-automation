@@ -24,7 +24,7 @@ resource "azurerm_resource_group" "autoazvm-dev-rg" {
 
 resource "azurerm_virtual_network" "autoazvm-dev-vnet" {
   name                = var.virtual_network_name
-  resource_group_name = azurerm_resource_group.autoazvm-dev-rg.name # explicit referenced resource to ensure proper dependency handeling
+  resource_group_name = azurerm_resource_group.autoazvm-dev-rg.name     # explicit referenced resource to ensure proper dependency handeling
   location            = azurerm_resource_group.autoazvm-dev-rg.location # explicit referenced resource to ensure proper dependency handeling
   address_space       = ["10.0.0.0/16"]
 

@@ -30,7 +30,5 @@ tfplan.out
 # ignore Visual Studio Code customization
 .vscode
 
-
-# Custom for this project
-# ignore PowerShell scripts
-*.ps1
+# ignore .png
+backend-migration-prompt-og.png
