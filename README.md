@@ -14,6 +14,12 @@ Provisioning Virtual Machine and related resources in Azure Platform using Terra
 
 ---
 
+## Architecture
+
+![](architecture/architecture.png)
+
+---
+
 ### Key Learnings
 
 Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automation/wiki) page.
