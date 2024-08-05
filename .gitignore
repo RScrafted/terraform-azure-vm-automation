@@ -24,8 +24,9 @@ tfplan.out
 # ignore graph file
 *.dot
 
-# ignore flowcharts
+# ignore drawio
 *.drawio
+*.png.bkp
 
 # ignore Visual Studio Code customization
 .vscode
