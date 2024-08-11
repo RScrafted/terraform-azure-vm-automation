@@ -26,10 +26,12 @@ tfplan.out
 
 # ignore drawio
 *.drawio
-*.png.bkp
+*.drawio.bkp
+*.svg
 
 # ignore Visual Studio Code customization
 .vscode
 
 # ignore .png
 backend-migration-prompt-og.png
+*.png.bkp
