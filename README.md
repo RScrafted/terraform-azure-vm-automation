@@ -12,11 +12,13 @@ Provisioning Virtual Machine and related resources in Azure Platform using Terra
 
 - The `backend` configuration creates new Resource Group to avoid saving on runner's machine, enhancing security and effective team collaboration.
 
+Note: It is important to Create TFState Backup Resource Group Prior to allow Terraform to initialize backend configuration.
+
 ---
 
 ## Architecture
 
-![](.github/images/architecture.png)
+![](images/architecture.png)
 
 ---
 
