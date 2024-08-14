@@ -24,5 +24,6 @@ tfplan.out
 # ignore graph file
 *.dot
 
-.github
-photos
+.github/rough_work
+images/backend-migration-prompt-og.png
+
