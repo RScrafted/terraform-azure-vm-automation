@@ -1,3 +1,4 @@
+# Ignore Directories
 # local .terraform directories
 **/.terraform/*
 
@@ -11,27 +12,17 @@
 # to skip MacOS file found after creating .bicep
 .DS_Store
 
+# ignore Visual Studio Code customization
+.vscode
+
 # plan files (optional). To save plan before destroy
 planout
 
 # save the terraform plan as tfplan.out
 tfplan.out
 
-# ignore personal notes or learning
-*.docx
-*.txt
-
 # ignore graph file
 *.dot
 
-# ignore drawio
-*.drawio
-*.drawio.bkp
-*.svg
-
-# ignore Visual Studio Code customization
-.vscode
-
-# ignore .png
-backend-migration-prompt-og.png
-*.png.bkp
+.github
+photos

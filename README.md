@@ -4,7 +4,7 @@
 
 Provisioning Virtual Machine and related resources in Azure Platform using Terraform as IaC tool to deploy it.
 
-- The `tf-init-apply.ps1` automates the terraform initialize, validate, plan and apply stages to provision resources as stated in `main.tf`.
+- The `terraform.yml` automates the terraform initialize, validate, plan and apply stages to provision resources as stated in `main.tf`.
 
 - The `tf-destroys.ps1` automates deprovisioning of the resources.
 
@@ -16,7 +16,7 @@ Provisioning Virtual Machine and related resources in Azure Platform using Terra
 
 ## Architecture
 
-![](architecture/architecture.png)
+![](.github/images/architecture.png)
 
 ---
 

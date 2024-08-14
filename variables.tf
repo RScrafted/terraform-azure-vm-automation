@@ -20,6 +20,14 @@ variable "network_interface_name" {
   description = "The name of the network interface"
 }
 
+variable "public_ip_name" {
+  description = "The name of the Public IP"
+}
+
+variable "network_security_group_name" {
+  description = "The name of the Network Security Group"
+}
+
 variable "ip_configuration_name" {
   description = "The name of the IP Configuration resource"
 }

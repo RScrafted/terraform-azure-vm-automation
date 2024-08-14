@@ -10,6 +10,10 @@ subnet_name = "autoazvm-dev-subnet"
 
 network_interface_name = "autoazvm-dev-ni"
 
+public_ip_name = "autoazvm-dev-pip"
+
+network_security_group_name = "autoazvm-dev-nsg"
+
 ip_configuration_name = "autoazvm-dev-ipconfig"
 
 virtual_machine_name = "autoazvm-dev-vm"
