@@ -4,13 +4,13 @@
 
 Provisioning Virtual Machine and related resources in Azure Platform using Terraform as IaC tool to deploy it.
 
-- The `terraform.yml` automates the terraform initialize, validate, plan and apply stages to provision resources as stated in `main.tf`.
+- The `terraform.yml` automates Continuous Integration (CI) executing terraform initialize, validate, plan, and performs Continuous Dilivery (CD) that executes terraform apply to provision resources as stated in `main.tf`.
 
-- The `tf-destroys.ps1` automates deprovisioning of the resources.
+- The `workflow_dispatch.yml` allows manual trigger towards deprovisioning of the resources for cost effectiveness.
 
 - The `terraform.tfvars` allows setup for multiple environments.
 
-- The `backend.ps1` has pwsh commands to create the **remote backend** for terraform statefile.
+- The `backend` configuration creates new Resource Group to avoid saving on runner's machine, enhancing security and effective team collaboration.
 
 ---
 
