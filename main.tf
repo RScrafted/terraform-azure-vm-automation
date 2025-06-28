@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
-      version = "4.17.0"
+      source  = "hashicorp/azurerm"
+      version = ">= 3.105.0" # The operator >= programmatically states “greater than or equal to” in code.
     }
   }
 }
@@ -13,7 +13,6 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false # This if required
     }
   }
-  subscription_id = var.subscription_id
 }
 resource "azurerm_resource_group" "autoazvm-dev-rg" {
   name     = var.resource_group_name
@@ -100,11 +99,6 @@ resource "azurerm_network_security_group" "autoazvm-dev-nsg" {
 }
 
 # it is important to use below resource especially
-# the `security_rule` defined in the NSG(azurerm_network_security_group) will be applied to all resources within the specified subnet
-# below step needs to be manually done when creating individual resources via portla, terraform does require this manual triger
-# we are therefore using below to ensure association is done
-
-# this is helpful in scenario, where we have multiple NSG and we want to associate them with multiple subnets.
 
 resource "azurerm_subnet_network_security_group_association" "autoazvm-dev-subnet-nsg-association" {
   subnet_id                 = azurerm_subnet.autoazvm-dev-subnet.id

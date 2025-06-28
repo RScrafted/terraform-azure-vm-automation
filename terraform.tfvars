@@ -4,8 +4,6 @@ resource_group_name = "autoazvm-dev-rg"
 # Avoid skiping defaults for Resource Group, incorrect manual entry destroys the existing RG and related resources if any.
 location = "eastus"
 
-subscription_id = "523873f6-b8b3-4ca3-aaa0-d98b67408ad8"
-
 virtual_network_name = "autoazvm-dev-vnet"
 
 subnet_name = "autoazvm-dev-subnet"
