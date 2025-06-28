@@ -73,3 +73,34 @@ Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automati
 - `backend.ps1` - Reference: [Microsoft Reactor Series](https://developer.microsoft.com/en-us/reactor/series/S-1162/)
 
 ---
+
+
+# Improvement
+adding random provider and using below
+
+resource "random_string" "random" {
+    length = 6
+    special = false
+    upper = false
+}
+
+name = "${lower(var.base_name)}${random_string.random.result}" # lower() function converts var.base_name if anything is captial. Azure does not allow any special or upper case characters.
+
+for above use concept of output.tf, meaning anyrandom thing generated or unique based on the code, get the output, and use the output as input in main.tf pointing with .rg_name_out
+reference: https://www.youtube.com/watch?v=0YLPfSLbp9Y&t=1292s
+
+## Schedule VM Deallocation on Azure - NOT WORKING
+resource "azurerm_virtual_machine_schedule" "shutdown" {
+  virtual_machine_id = azurerm_virtual_machine.example.id
+  location           = azurerm_virtual_machine.example.location
+  daily_recurring {
+    time_zone = "UTC"
+    time      = "2200"
+  }
+}
+
+
+azurerm_virtual_machine is suspended with latest version, so when updating version, cgange to azurerm_linx_virtual_machine
+
+
+In the Yamel file, try to make changes that it should not activate on the main branch, but on any other branch, so that can be tested before going to the main and try to configure something like rollback in case of any kind of a failure

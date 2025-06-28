@@ -20,6 +20,7 @@ planout
 
 # save the terraform plan as tfplan.out
 tfplan.out
+plan.out
 
 # ignore graph file
 *.dot
