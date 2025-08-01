@@ -99,12 +99,11 @@ resource "azurerm_network_security_group" "autoazvm-dev-nsg" {
   }
 }
 
-# it is important to use below resource especially
-# the `security_rule` defined in the NSG(azurerm_network_security_group) will be applied to all resources within the specified subnet
-# below step needs to be manually done when creating individual resources via portla, terraform does require this manual triger
-# we are therefore using below to ensure association is done
-
-# this is helpful in scenario, where we have multiple NSG and we want to associate them with multiple subnets.
+# It’s important to use the following resource to explicitly associate a subnet with a Network Security Group (NSG).
+# Without this, the `security_rule`s defined in the NSG(azurerm_network_security_group) will not be applied to the subnet.
+# When creating resources manually via the Azure portal, this association needs to be done manually.
+# In Terraform, we must declare this explicitly—there is no automatic association.
+# This becomes especially useful in scenarios where multiple NSGs are used across different subnets.
 
 resource "azurerm_subnet_network_security_group_association" "autoazvm-dev-subnet-nsg-association" {
   subnet_id                 = azurerm_subnet.autoazvm-dev-subnet.id

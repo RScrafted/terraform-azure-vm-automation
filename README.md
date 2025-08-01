@@ -1,52 +1,52 @@
 ## Terraform Azure Virtual Machine Automation
 
----
+Provision a Virtual Machine and its related resources on the Azure platform using Terraform as your Infrastructure-as-Code (IaC) tool.
 
-Provisioning Virtual Machine and related resources in Azure Platform using Terraform as IaC tool to deploy it.
+### Architecture
 
-- The `terraform.yml` automates Continuous Integration (CI) executing terraform initialize, validate, plan, and performs Continuous Dilivery (CD) that executes terraform apply to provision resources as stated in `main.tf`.
+![Infrastructure Overview](images/architecture.png)
 
-- The `workflow_dispatch.yml` allows manual trigger towards deprovisioning of the resources for cost effectiveness.
+### CI/CD Workflows
 
-- The `terraform.tfvars` allows setup for multiple environments.
+- **terraform.yml**: Automates CI/CD pipeline—runs `terraform init`, `validate`, `plan`, and `apply` to provision resources based on `main.tf`.
 
-- The `backend.tf` configuration creates new Resource Group to avoid saving on runner's machine, enhancing security and effective team collaboration.
+### Multi-Environment Support
+
+- **terraform.tfvars** enables deploying across multiple environments (e.g., dev, test, prod).
+
+### Backend State Management
+
+- **backend.tf**: Configures remote state storage by creating a new Resource Group, ensuring:
+  - Secure state storage off local runners
+  - Safe collaboration with state locking
+  - Versioning of infrastructure changes
 
 > [!IMPORTANT]
-> **Note:** It is important to Create TFState Backup Resource Group by running `backend.ps1` Prior to allow Terraform to initialize backend configuration.
+> **Note:** Run `backend.ps1` before initializing Terraform to provision backend storage resources.
 
-### Connecting new VM using ssh
+### SSH Access to VM
 
-Identifying new vm (ubuntu's) IP:
-
+Retrieve your VM’s (Ubuntu) public IP:
 ```sh
 az vm list-ip-addresses --resource-group <RESOURCE_GROUP_NAME> --name <VM_NAME> --query "[].virtualMachine.network.publicIpAddresses[0].ipAddress" --output tsv
 ```
 
-Just replace <RESOURCE_GROUP_NAME> with the name of your resource group and <VM_NAME> with the name of your VM. This command will return the public IP address of your VM.
-
-
+Connect via SSH:
 ```bash
-ssh username@20.20.10.xxx
+ssh <username>@<IP_ADDRESS>
 ```
 
----
+### Generating a Graph
 
-## Architecture
+#### Prerequisite
 
-![](images/architecture.png)
-
----
-
-## Generating a Graph
-### Prerequisite
 Install `Graphviz` locally via Homebrew:
 
 ```bash
 brew install graphviz
 dot -V # verify it by running
 ```
-### Generate a Terraform Plan Graph (Advanced):
+#### Generate a Terraform Plan Graph (Advanced):
 
 - In your terminal, navigate to the directory containing your Terraform configuration files. 
 - Run `terraform init` to initialize the configuration.
@@ -57,13 +57,22 @@ dot -V # verify it by running
 
 Open the `graph.svg` file in Visual Studio Code to view the visual representation of your Terraform resources and their dependencies.
 
----
+## Key Learnings
 
-### Key Learnings
+These are insights and resolutions gathered during the development of this Terraform-based Azure VM automation project:
 
-Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automation/wiki) page.
+- **`network_interface_name`**  
+  Referencing a map (`{}`) directly caused issues; resolved by extracting the value into a separate variable.
 
----
+- **`network_interface_ids`**  
+  Required a `list(string)` format. Ensured correct passing by inserting as an array `[]`.
+
+- **`azurerm_virtual_network` Dependency**  
+  The virtual network was prematurely initialized before the resource group. Added a `depends_on` clause to enforce creation order and avoid failures.
+
+- **Automatic Creation of `NetworkWatcherRG`**  
+  Azure auto-generates a resource group named `NetworkWatcherRG` after deploying networking components like VNET, SUBNET, and NI. This group is part of Azure's free network monitoring and can be manually deleted or disabled per region if desired.
+  ![NetworkWatcherRG](./images/NetworkWatcherRG.png)
 
 ### Acknowledgements
 - [Terraform Documentation](https://www.terraform.io/docs/providers/azurerm/)
@@ -72,35 +81,11 @@ Please visit the [WIKI](https://github.com/RScrafted/terraform-azure-vm-automati
 - **GitHub**: Platform for version control and collaboration.
 - `backend.ps1` - Reference: [Microsoft Reactor Series](https://developer.microsoft.com/en-us/reactor/series/S-1162/)
 
----
+## Contributing
 
+Contributions are **welcome**! Feel free to `fork` this repository and submit a `pull request (PR)`.
 
-# Improvement
-adding random provider and using below
+- For major changes, **please open an issue first** to discuss your ideas and ensure alignment.
+- There’s an open [discussion thread](https://github.com/RScrafted/terraform-azure-vm-automation/discussions) where everyone can share improvements, feedback, and use cases. Jump in!
 
-resource "random_string" "random" {
-    length = 6
-    special = false
-    upper = false
-}
-
-name = "${lower(var.base_name)}${random_string.random.result}" # lower() function converts var.base_name if anything is captial. Azure does not allow any special or upper case characters.
-
-for above use concept of output.tf, meaning anyrandom thing generated or unique based on the code, get the output, and use the output as input in main.tf pointing with .rg_name_out
-reference: https://www.youtube.com/watch?v=0YLPfSLbp9Y&t=1292s
-
-## Schedule VM Deallocation on Azure - NOT WORKING
-resource "azurerm_virtual_machine_schedule" "shutdown" {
-  virtual_machine_id = azurerm_virtual_machine.example.id
-  location           = azurerm_virtual_machine.example.location
-  daily_recurring {
-    time_zone = "UTC"
-    time      = "2200"
-  }
-}
-
-
-azurerm_virtual_machine is suspended with latest version, so when updating version, cgange to azurerm_linx_virtual_machine
-
-
-In the Yamel file, try to make changes that it should not activate on the main branch, but on any other branch, so that can be tested before going to the main and try to configure something like rollback in case of any kind of a failure
+> 💡 Whether it's refactoring code, improving documentation, or sharing deployment tips—every contribution helps!
